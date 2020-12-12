@@ -1,0 +1,89 @@
+type Query {
+    info: String!
+    findOneUser(email: String!) :User
+    getAllPost: [Post!]
+    getPost(id: Int!): Post
+}
+
+type Mutation {
+    createUser(
+        name: String!, 
+        email: String!, 
+        password: String!, 
+        country: String!, 
+    ): AuthPayload
+
+    login(email: String!, password: String!): AuthPayload
+
+    createCategory(title: String!, slug: String!): Category
+  
+    createPost(title: String!, content: String!, category: Int): Post
+
+    vote(postId: Int!): Vote
+
+    comment(post: Int, content: String): Comment
+}
+
+type AuthPayload {
+    token: String,
+    user: User!
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    password: String!
+    country: String!
+    badges: String!
+    posts: [Post!]
+    implemented: [Implement]
+}
+
+type Post {
+    id: ID!
+    title: String!
+    content: String!
+    postBy: User!
+    category: Category!
+    comments: [Comment]
+    vote: [Vote!]
+    implementedBy: [Implement!]
+}
+
+type Vote {
+    id: ID!
+    userId: User
+    postId: Post
+}
+
+type Comment {
+    id: ID!
+    post: Post
+    comment: String!
+    user: User
+}
+
+type Category {
+    id: ID!
+    title: String!
+    slug: String!
+    posts: [Post!]
+}
+
+type Implement {
+    id: ID!
+    userId: [User!]
+    postId: Post!
+    comment: String
+}
+
+type Badge {
+    id: ID!
+    title: String!
+    icon: String
+}
+
+type Success {
+    message: String
+}
