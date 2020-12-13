@@ -4,12 +4,16 @@ const {PrismaClient} = require('@prisma/client')
 const Query = require('./src/resolvers/Query')
 const Mutation = require('./src/resolvers/Mutation')
 const Post = require("./src/resolvers/Post")
+const Vote = require("./src/resolvers/Vote")
+const Comment = require("./src/resolvers/Comment")
 
 
 const resolvers = {
     Mutation,
     Query,
     Post,
+    Comment,
+    Vote
     // AuthPayload
     // User,
     // Post,

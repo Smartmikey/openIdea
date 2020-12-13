@@ -1,11 +1,11 @@
 const {userID} = require("../../utils")
 
 module.exports = {
-    async success (parent, args, context, info) {
-        
-        return "Thank you for voting"
+    
+     async postId (parent, args, context, info) {
+        return await context.prisma.vote.findUnique({where:{id: parent.id}}).postId();
     },
-     async post (parent, args, context, info) {
-        return context.prisma.post.findUnique({where:{id: parent.id}}).post();
+     async userId (parent, args, context, info) {
+        return await context.prisma.vote.findUnique({where:{id: parent.id}}).user();
     },
 }

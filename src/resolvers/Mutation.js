@@ -115,7 +115,7 @@ const vote = async (parent, args, context, info ) => {
     console.log(hasVoted);
 
     if(hasVoted.length > 0) throw new Error("You have already voted")
-    const vote = context.prisma.vote.create({
+    const vote = await context.prisma.vote.create({
         data: {
             user: {
             connect: {
@@ -132,9 +132,28 @@ const vote = async (parent, args, context, info ) => {
     return vote
 }
 
-const comment = (parent, args, context, info) => {
+const comment = async (parent, args, context, info) => {
     const userId = getUserId(context)
-    const commentText = context.prisma.comment.create({
+
+    const checkIfCommentExist = await context.prisma.comment.findMany({
+        where: 
+            {AND: [{
+                postId: args.post
+            },
+            {
+                content: args.content
+            },
+            {commentBy: userId}
+        ]}
+    })
+
+    if(checkIfCommentExist.length > 0){
+        console.log(checkIfCommentExist);
+        throw new Error("same comment already exist by you.")
+    
+    }
+
+    const commentText = await context.prisma.comment.create({
         data: {
             content: args.content,
                 post: {

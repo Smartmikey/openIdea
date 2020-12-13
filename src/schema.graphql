@@ -60,7 +60,7 @@ type Vote {
 type Comment {
     id: ID!
     post: Post
-    comment: String!
+    content: String!
     user: User
 }
 

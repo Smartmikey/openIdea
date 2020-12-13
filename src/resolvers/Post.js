@@ -6,7 +6,7 @@ module.exports = {
         return context.prisma.post.findUnique({where:{id: parent.id}}).postBy();
     },
      async comments (parent, args, context, info) {
-        return context.prisma.post.findUnique({where:{id: parent.id}}).comments();
+        return context.prisma.post.findUnique({where:{id: parent.id}}).comment();
     },
      async vote (parent, args, context, info) {
         return context.prisma.post.findUnique({where:{id: parent.id}}).vote();
