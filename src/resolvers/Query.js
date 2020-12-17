@@ -22,9 +22,14 @@ const getPost = async (parent, args, context, info) => {
     return post
 }
 
+const getAllUsers = async (parent, args, context, info) => {
+    return context.prisma.user.findMany()
+}
+
 module.exports ={
     info,
     findOneUser,
     getAllPost,
-    getPost
+    getPost,
+    getAllUsers
 }

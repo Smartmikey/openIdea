@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+model Badge {
+  id      Int    @id @default(autoincrement())
+  title   String
+  // This type is currently not supported.
+  // icon binary
+  user    User[]
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  title String
+  slug  String?
+  post  Post[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  date      DateTime @default(now())
+  commentBy Int?
+  postId    Int?
+  user      User?    @relation(fields: [commentBy], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+}
+
+model Post {
+  id         Int         @id @default(autoincrement())
+  title      String
+  content    String
+  postedBy   Int?
+  date       DateTime    @default(now())
+  categoryId Int?
+  category   Category?   @relation(fields: [categoryId], references: [id])
+  postBy       User?       @relation(fields: [postedBy], references: [id])
+  comment    Comment[]
+  implement  Implement[]
+  vote       Vote[]
+}
+
+model User {
+  id        Int         @id @default(autoincrement())
+  name      String
+  email     String      @unique
+  password  String
+  country   String?
+  badges    Int?
+  badge     Badge?      @relation(fields: [badges], references: [id])
+  comments  Comment[]
+  implement Implement[]
+  posts     Post[]
+  vote      Vote[]
+}
+
+model Vote {
+  id     Int      @id @default(autoincrement())
+  userId Int?
+  postId Int?
+  date   DateTime @default(now())
+  post   Post?    @relation(fields: [postId], references: [id])
+  user   User?    @relation(fields: [userId], references: [id])
+}
+
+model Implement {
+  id      Int      @id @default(autoincrement())
+  userId  Int?
+  postId  Int?
+  date    DateTime @default(now())
+  comment String?
+  post    Post?    @relation(fields: [postId], references: [id])
+  user    User?    @relation(fields: [userId], references: [id])
+}

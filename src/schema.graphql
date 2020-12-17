@@ -3,6 +3,7 @@ type Query {
     findOneUser(email: String!) :User
     getAllPost: [Post!]
     getPost(id: Int!): Post
+    getAllUsers: [User]
 }
 
 type Mutation {
