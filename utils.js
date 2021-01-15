@@ -14,7 +14,7 @@ const getUserId = (context) => {
     }
     throw new Error("You must be logged in to perform this operation")
 }
-
+//utility functions
 module.exports = {
     APP_SECRET,
     getUserId
